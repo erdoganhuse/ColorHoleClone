@@ -40,13 +40,10 @@ namespace Core.Controller.Level
 
         private void OnStageLoaded(StageLoadedSignal stageLoadedSignal)
         {
-            StageData stage = _levelContainer.Levels[_levelController.CurrentLevelIndex]
-                .Stages[_levelController.CurrentStageIndex];
+            StageData stage = _levelContainer.Levels[_levelController.CurrentLevelIndex].Stages[_levelController.CurrentStageIndex];
 
             _absorbedObjectCount = 0;
             _initialObjectCount = stage.Prefab.transform.GetComponentsInChildrenWithTag<Transform>(Tags.Absorbable).Length;
-            
-            Debug.Log(_initialObjectCount);
         }
         
         private void OnEnteredToHole(EnteredToHoleSignal enteredToHoleSignal)
@@ -61,7 +58,7 @@ namespace Core.Controller.Level
             }
             else if (enteredToHoleSignal.ObjectTag == Tags.NonAbsorbable)
             {
-                _levelController.EndStage(false);   
+                _signalBus.TryFire(new StageFailedSignal());
             }
         }
 

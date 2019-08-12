@@ -7,13 +7,10 @@ namespace Core.Controller.Level
 {
     public class LevelSpawner : MonoBehaviour
     {
-        [SerializeField] private Transform _levelContainerTransform;
-
         private SignalBus _signalBus;
         private LevelContainer _levelContainer;
 
         private GameObject _currentStageObject;
-        private int _currentLevelId;
         
         [Inject]
         private void Construct(
@@ -23,18 +20,14 @@ namespace Core.Controller.Level
             _signalBus = signalBus;
             _levelContainer = levelContainer;
             
-            _signalBus.Subscribe<LevelStartedSignal>(OnLevelStarted);
-            _signalBus.Subscribe<LevelEndedSignal>(OnLevelEnded);
-            
             _signalBus.Subscribe<StageLoadedSignal>(OnStageLoaded);
+            _signalBus.Subscribe<StageEndedSignal>(OnStageEnded);
         }
 
         private void OnDestroy()
-        {
-            _signalBus.Unsubscribe<LevelStartedSignal>(OnLevelStarted);
-            _signalBus.Unsubscribe<LevelEndedSignal>(OnLevelEnded);
-            
+        {            
             _signalBus.Unsubscribe<StageLoadedSignal>(OnStageLoaded);
+            _signalBus.Subscribe<StageEndedSignal>(OnStageEnded);
         }
 
         #region Signal Listener
@@ -44,12 +37,13 @@ namespace Core.Controller.Level
             _currentStageObject =
                 Instantiate(
                     _levelContainer.Levels[stageLoadedSignal.LevelIndex].Stages[stageLoadedSignal.StageIndex].Prefab,
-                    _levelContainerTransform);
+                    transform);
         }
 
-        private void OnLevelStarted() { }
-        
-        private void OnLevelEnded() { }
+        private void OnStageEnded(StageEndedSignal stageEndedSignal)
+        {
+            Destroy(_currentStageObject);
+        }
         
         #endregion
     }

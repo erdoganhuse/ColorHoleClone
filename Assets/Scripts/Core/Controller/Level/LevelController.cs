@@ -36,6 +36,8 @@ namespace Core.Controller.Level
         private readonly SignalBus _signalBus;
         private readonly UserDataController _userDataController;
         private readonly LevelContainer _levelContainer;
+
+        private LevelData _currentLevelData;
         
         public LevelController(
             SignalBus signalBus,
@@ -52,9 +54,12 @@ namespace Core.Controller.Level
         ~LevelController() { }
         
         public void LoadLevel(int levelId)
-        {
+        {            
             CurrentLevelId = levelId;
-            _signalBus.TryFire(new LevelLoadedSignal(CurrentLevelId));
+
+            _currentLevelData = _levelContainer.Levels[CurrentLevelIndex];
+
+            _signalBus.TryFire(new LevelLoadedSignal(CurrentLevelId, _currentLevelData.Stages.Count));
             
             LoadStage(0);
         }
@@ -74,6 +79,8 @@ namespace Core.Controller.Level
             IsDuringLevel = true;
             
             _signalBus.TryFire(new LevelStartedSignal(CurrentLevelId));
+            
+            StartStage();
         }
 
         public void EndLevel(bool isSuccessful)
@@ -81,18 +88,13 @@ namespace Core.Controller.Level
             IsDuringLevel = false;
             
             _signalBus.TryFire(new LevelEndedSignal(CurrentLevelId, isSuccessful));
-            
-            if (isSuccessful)
-            {
-                
-            }            
         }
 
         public void LoadStage(int stageIndex)
         {
             CurrentStageIndex = stageIndex;
             
-            StageData stage = _levelContainer.Levels[CurrentLevelIndex].Stages[CurrentStageIndex];
+            StageData stage = _currentLevelData.Stages[CurrentStageIndex];
             int absorbedObjectCount = stage.Prefab.transform.GetComponentsInChildrenWithTag<Transform>(Tags.Absorbable).Length;
             
             _signalBus.TryFire(new StageLoadedSignal(CurrentLevelIndex, CurrentStageIndex, absorbedObjectCount));
@@ -100,12 +102,12 @@ namespace Core.Controller.Level
 
         public void StartStage()
         {
-            _signalBus.TryFire(new StageStartedSignal(CurrentStageIndex));            
+            _signalBus.TryFire(new StageStartedSignal(CurrentStageIndex));    
         }
         
         public void EndStage(bool isSuccessful)
         {
-            _signalBus.TryFire(new StageEndedSignal(CurrentStageIndex));
+            _signalBus.TryFire(new StageEndedSignal(CurrentStageIndex, isSuccessful));
 
             if (isSuccessful)
             {
@@ -116,6 +118,7 @@ namespace Core.Controller.Level
                 else
                 {
                     LoadStage(CurrentStageIndex + 1);
+                    StartStage();
                 }
             }
             else

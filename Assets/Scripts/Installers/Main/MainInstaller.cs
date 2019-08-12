@@ -1,5 +1,6 @@
 using Core.Controller;
 using Core.Controller.User;
+using Core.Data.Settings;
 using Core.Data.User;
 using Core.Signal;
 using DeveGames.SceneManager;
@@ -12,7 +13,8 @@ namespace Installers.Main
     public class MainInstaller : MonoInstaller<MainInstaller>
     {
         [SerializeField] private UserData _defaultUserData;
-        
+        [SerializeField] private GameSettings _gameSettings;
+
         public override void InstallBindings()
         {
             InstallData();
@@ -31,7 +33,7 @@ namespace Installers.Main
         
         private void InstallSettings()
         {
-            
+            Container.BindInstance(_gameSettings).AsSingle().NonLazy();
         }
         
         private void InstallSignals()

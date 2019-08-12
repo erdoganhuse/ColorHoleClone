@@ -3,6 +3,7 @@ using Core.Controller.UI;
 using Core.Data.Level;
 using Core.Signal.Hole;
 using Core.Signal.Level;
+using Core.UI.Common;
 using Core.View;
 using DeveGames.PopupSystem.Scripts;
 using UnityEngine;
@@ -15,7 +16,9 @@ namespace Installers.Game
     {
         [SerializeField] private LevelContainer _levelContainer;
         [SerializeField] private PopupManager _gamePopupManager;
+
         [SerializeField] private PlatformView _platformView;
+        [SerializeField] private LevelProgressView _levelProgressView;
         
         public override void InstallBindings()
         {
@@ -28,8 +31,9 @@ namespace Installers.Game
             Container.BindInstance(_levelContainer);
             Container.BindInstance(_gamePopupManager).WithId(BindingIds.GamePopupManager).AsSingle().NonLazy();
             Container.BindInstance(_platformView).AsSingle().NonLazy();
+            Container.BindInstance(_levelProgressView).AsSingle().NonLazy();
         }
-
+        
         private void InstallSignals()
         {
             Container.DeclareSignal<LevelLoadedSignal>();
@@ -39,7 +43,10 @@ namespace Installers.Game
             Container.DeclareSignal<StageLoadedSignal>();
             Container.DeclareSignal<StageStartedSignal>();
             Container.DeclareSignal<StageEndedSignal>();
-
+            
+            Container.DeclareSignal<StageContinuedSignal>();
+            Container.DeclareSignal<StageFailedSignal>();
+            
             Container.DeclareSignal<EnteredToHoleSignal>();
         }
     }
