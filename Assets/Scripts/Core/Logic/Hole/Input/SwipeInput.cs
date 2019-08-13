@@ -7,6 +7,8 @@ namespace Core.Logic.Hole.Input
 {
     public class SwipeInput : MonoBehaviour, IInputHandler
     {
+        private const float ScreenNormalizeMultiplier = 0.05f;
+        
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
 
@@ -23,7 +25,7 @@ namespace Core.Logic.Hole.Input
             _signalBus.Subscribe<StageStartedSignal>(OnStageStarted);
             _signalBus.Subscribe<StageEndedSignal>(OnStageEnded);
             _signalBus.Subscribe<StageFailedSignal>(OnStageFailed);
-            _signalBus.Subscribe<StageContinuedSignal>(OnStageContinued);
+            _signalBus.Subscribe<StageContinuedSignal>(OnStageContinued);            
         }
 
         private void OnDestroy()
@@ -50,8 +52,8 @@ namespace Core.Logic.Hole.Input
             }
             if (UnityEngine.Input.GetMouseButton(0))
             {
-                Horizontal = (UnityEngine.Input.mousePosition.x - _previousMousePosition.x);
-                Vertical = (UnityEngine.Input.mousePosition.y - _previousMousePosition.y);
+                Horizontal = (UnityEngine.Input.mousePosition.x - _previousMousePosition.x) * ScreenNormalizeMultiplier;
+                Vertical = (UnityEngine.Input.mousePosition.y - _previousMousePosition.y) * ScreenNormalizeMultiplier;
 
                 _previousMousePosition = UnityEngine.Input.mousePosition;
             }
