@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Signal.Hole;
 using Core.Signal.Level;
+using Core.Signal.Stage;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities.Constants;
@@ -24,8 +25,8 @@ namespace Core.UI.Common
         private int _stageAbsorbableObjectCount;
         private int _currentAbsorbedObjectCount;
         
-        private List<Slider> _activeProgressSliders = new List<Slider>();
-        private List<Slider> _spawnedProgressSliders = new List<Slider>();
+        private readonly List<Slider> _activeProgressSliders = new List<Slider>();
+        private readonly List<Slider> _spawnedProgressSliders = new List<Slider>();
 
         [Inject]
         private void Construct(SignalBus signalBus)
@@ -34,7 +35,7 @@ namespace Core.UI.Common
             
             _signalBus.Subscribe<LevelLoadedSignal>(OnLevelLoaded);
             _signalBus.Subscribe<StageLoadedSignal>(OnStageLoaded);
-            _signalBus.Subscribe<EnteredToHoleSignal>(OnEnteredToHole);
+            _signalBus.Subscribe<HoleEnteredSignal>(OnHoleEntered);
         }
 
         public void Open()
@@ -95,9 +96,9 @@ namespace Core.UI.Common
             _nextLevelIdText.text = (stageLoadedSignal.LevelIndex + 2).ToString();
         }
         
-        private void OnEnteredToHole(EnteredToHoleSignal enteredToHoleSignal)
+        private void OnHoleEntered(HoleEnteredSignal holeEnteredSignal)
         {
-            if (enteredToHoleSignal.ObjectTag == Tags.Absorbable)
+            if (holeEnteredSignal.ObjectTag == Tags.Absorbable)
             {
                 _currentAbsorbedObjectCount++;
                 

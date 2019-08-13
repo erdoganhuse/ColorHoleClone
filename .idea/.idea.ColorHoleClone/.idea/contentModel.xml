@@ -306,20 +306,6 @@
               </e>
             </e>
           </e>
-          <e p="LowPolyWater_Pack" t="Include">
-            <e p="LowPoly Island" t="Include">
-              <e p="Credits.txt" t="Include" />
-            </e>
-            <e p="Scripts" t="Include">
-              <e p="Editor" t="Include">
-                <e p="GeneratePlane.cs" t="Include" />
-              </e>
-              <e p="LowPolyWater.cs" t="Include" />
-            </e>
-            <e p="Shaders" t="Include">
-              <e p="WaterShaded.shader" t="Include" />
-            </e>
-          </e>
           <e p="Pixelplacement" t="Include">
             <e p="Surge" t="Include">
               <e p="Chooser" t="Include">
@@ -924,9 +910,6 @@
           </e>
           <e p="Sirenix" t="Include">
             <e p="Assemblies" t="Include">
-              <e p="AOT" t="Include">
-                <e p="link.xml" t="Include" />
-              </e>
               <e p="link.xml" t="Include" />
               <e p="Sirenix.OdinInspector.Attributes.xml" t="Include" />
               <e p="Sirenix.OdinInspector.Editor.xml" t="Include" />
@@ -1771,22 +1754,40 @@
                 <e p="LevelData.cs" t="Include" />
                 <e p="StageData.cs" t="Include" />
               </e>
+              <e p="Settings" t="Include">
+                <e p="GameSettings.cs" t="Include" />
+              </e>
               <e p="User" t="Include">
                 <e p="UserCurrency.cs" t="Include" />
                 <e p="UserData.cs" t="Include" />
                 <e p="UserProgress.cs" t="Include" />
               </e>
             </e>
+            <e p="Logic" t="Include">
+              <e p="Hole" t="Include">
+                <e p="Input" t="Include">
+                  <e p="IInputHandler.cs" t="Include" />
+                  <e p="SwipeInput.cs" t="Include" />
+                </e>
+                <e p="Movement" t="Include">
+                  <e p="HoleMovement.cs" t="Include" />
+                </e>
+              </e>
+            </e>
             <e p="Signal" t="Include">
               <e p="GameStartedSignal.cs" t="Include" />
               <e p="Hole" t="Include">
-                <e p="EnteredToHoleSignal.cs" t="Include" />
+                <e p="HoleEnteredSignal.cs" t="Include" />
               </e>
               <e p="Level" t="Include">
                 <e p="LevelEndedSignal.cs" t="Include" />
                 <e p="LevelLoadedSignal.cs" t="Include" />
                 <e p="LevelStartedSignal.cs" t="Include" />
+              </e>
+              <e p="Stage" t="Include">
+                <e p="StageContinuedSignal.cs" t="Include" />
                 <e p="StageEndedSignal.cs" t="Include" />
+                <e p="StageFailedSignal.cs" t="Include" />
                 <e p="StageLoadedSignal.cs" t="Include" />
                 <e p="StageStartedSignal.cs" t="Include" />
               </e>
@@ -1802,25 +1803,22 @@
                 <e p="SettingsScreen.cs" t="Include" />
                 <e p="StartScreen.cs" t="Include" />
                 <e p="StoreScreen.cs" t="Include" />
+                <e p="WinScreen.cs" t="Include" />
               </e>
             </e>
             <e p="View" t="Include">
               <e p="PlatformView.cs" t="Include" />
             </e>
           </e>
-          <e p="EnteredToHoleChecker.cs" t="Include" />
-          <e p="HoleMovement.cs" t="Include" />
+          <e p="Helper" t="Include">
+            <e p="HoleEnteredChecker.cs" t="Include" />
+            <e p="LayerChanger.cs" t="Include" />
+          </e>
           <e p="Installers" t="Include">
             <e p="AppInstaller.cs" t="Include" />
-            <e p="Game" t="Include">
-              <e p="GameInstaller.cs" t="Include" />
-            </e>
-            <e p="Main" t="Include">
-              <e p="MainInstaller.cs" t="Include" />
-            </e>
+            <e p="GameInstaller.cs" t="Include" />
+            <e p="MainInstaller.cs" t="Include" />
           </e>
-          <e p="LayerChanger.cs" t="Include" />
-          <e p="SwipeInput.cs" t="Include" />
           <e p="Utilities" t="Include">
             <e p="Constants" t="Include">
               <e p="SceneNames.cs" t="Include" />

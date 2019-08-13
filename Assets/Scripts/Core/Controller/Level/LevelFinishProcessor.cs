@@ -1,6 +1,6 @@
 using Core.Data.Level;
 using Core.Signal.Hole;
-using Core.Signal.Level;
+using Core.Signal.Stage;
 using DeveGames.Extensions;
 using UnityEngine;
 using Utilities.Constants;
@@ -27,13 +27,13 @@ namespace Core.Controller.Level
             _levelController = levelController;
             
             _signalBus.Subscribe<StageLoadedSignal>(OnStageLoaded);
-            _signalBus.Subscribe<EnteredToHoleSignal>(OnEnteredToHole);
+            _signalBus.Subscribe<HoleEnteredSignal>(OnHoleEntered);
         }
 
         ~LevelFinishProcessor()
         {
             _signalBus.Unsubscribe<StageLoadedSignal>(OnStageLoaded);
-            _signalBus.Unsubscribe<EnteredToHoleSignal>(OnEnteredToHole);            
+            _signalBus.Unsubscribe<HoleEnteredSignal>(OnHoleEntered);            
         }
         
         #region Signal Listeners
@@ -46,9 +46,9 @@ namespace Core.Controller.Level
             _initialObjectCount = stage.Prefab.transform.GetComponentsInChildrenWithTag<Transform>(Tags.Absorbable).Length;
         }
         
-        private void OnEnteredToHole(EnteredToHoleSignal enteredToHoleSignal)
+        private void OnHoleEntered(HoleEnteredSignal holeEnteredSignal)
         {
-            if (enteredToHoleSignal.ObjectTag == Tags.Absorbable)
+            if (holeEnteredSignal.ObjectTag == Tags.Absorbable)
             {
                 _absorbedObjectCount++;
                 if (_absorbedObjectCount == _initialObjectCount)
@@ -56,7 +56,7 @@ namespace Core.Controller.Level
                     _levelController.EndStage(true);
                 }
             }
-            else if (enteredToHoleSignal.ObjectTag == Tags.NonAbsorbable)
+            else if (holeEnteredSignal.ObjectTag == Tags.NonAbsorbable)
             {
                 _signalBus.TryFire(new StageFailedSignal());
             }

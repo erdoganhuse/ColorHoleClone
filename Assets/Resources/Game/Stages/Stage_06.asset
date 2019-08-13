@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd26fa6c1a9437888bb82dc23ad869e, type: 3}
   m_Name: Stage_06
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 156071612676443304, guid: 8598f74846c34ed449e60aeacdb823e1, type: 3}
+  Prefab: {fileID: 7401312784566236963, guid: 43f02701183d6874f80b949162a29ace, type: 3}

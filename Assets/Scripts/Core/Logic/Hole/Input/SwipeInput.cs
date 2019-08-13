@@ -1,11 +1,12 @@
 using Core.Signal.Level;
+using Core.Signal.Stage;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Logic.Hole.Input
 {
     public class SwipeInput : MonoBehaviour, IInputHandler
-    {    
+    {
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
 
@@ -49,8 +50,8 @@ namespace Core.Logic.Hole.Input
             }
             if (UnityEngine.Input.GetMouseButton(0))
             {
-                Horizontal = UnityEngine.Input.mousePosition.x - _previousMousePosition.x;
-                Vertical = UnityEngine.Input.mousePosition.y - _previousMousePosition.y;
+                Horizontal = (UnityEngine.Input.mousePosition.x - _previousMousePosition.x);
+                Vertical = (UnityEngine.Input.mousePosition.y - _previousMousePosition.y);
 
                 _previousMousePosition = UnityEngine.Input.mousePosition;
             }
@@ -59,6 +60,9 @@ namespace Core.Logic.Hole.Input
                 Horizontal = 0f;
                 Vertical = 0f;
             }
+
+            Horizontal = Mathf.Clamp(Horizontal, -1f, 1f);
+            Vertical = Mathf.Clamp(Vertical, -1f, 1f);
         }
         
         #region Signal Listeners

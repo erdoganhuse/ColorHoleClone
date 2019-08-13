@@ -1,6 +1,7 @@
 using System.Collections;
 using Core.Controller.Level;
 using Core.Signal.Level;
+using Core.Signal.Stage;
 using DeveGames.CoroutineSystem;
 using DeveGames.Extensions;
 using DeveGames.PopupSystem.Scripts;

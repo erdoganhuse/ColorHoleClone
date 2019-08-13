@@ -1,5 +1,6 @@
 using Core.Signal;
 using Core.Signal.Level;
+using Core.Signal.Stage;
 using Core.UI.Common;
 using Core.UI.Screens;
 using DeveGames.PopupSystem.Scripts;
