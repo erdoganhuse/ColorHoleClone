@@ -1,3 +1,3 @@
 # ColorHoleClone
 
-Game should be started with Main scene.
+Game should be started from Main scene.
